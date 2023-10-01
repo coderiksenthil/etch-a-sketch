@@ -1,23 +1,105 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>etch-a-sketch</title>
-        <script src = "script.js"></script>
-    </head>
-    <body>
-        
- 
-        <h1>etch-a-sketch</h1>
-        
-        <form>
-        <button id = "create" onclick="get()">create</button>
-        <button id = "clear">remove</button>
-        <button id = "singlecolor">singlecolor</button>
-        <br>
-        <br>
-        <button id = "multicolor">multicolor</button>
-        <button id = "grey">grey</button>
-        </form>
-        <div id="container"> </div>
-    </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link href="style.css" rel="stylesheet">
+    <script src = "script.js"></script>-->
+    <!--refferd many sits like stackoverflow,w3schools etc-->
+    <title>Etch-a-Sketch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            display: grid;
+            grid-gap: 1px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .grid-square {
+            padding-bottom: 100%;
+            background-color: white;
+            transition: background-color 0.2s;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <button onclick="createCustomGrid()">Create Custom Grid</button>
+        <button onclick="setColor('black')">Black</button>
+        <button onclick="setColor('gray')">Gray</button>
+        <button onclick="setColor('rainbow')">Rainbow</button>
+        <button onclick="clearGrid()">Clear</button>
+    </div>
+    <div class="container" id="grid-container"></div>
+
+    <script>
+        const container = document.getElementById('grid-container');
+        let currentColor = 'black';
+
+        function createCustomGrid() {
+            const rows = parseInt(prompt('Enter the number of rows:'));
+            const columns = parseInt(prompt('Enter the number of columns:'));
+
+            if (isNaN(rows) || isNaN(columns) || rows < 1 || columns < 1 || rows > 100 || columns > 100) {
+                alert('Do Only enter valid row and column values between 1 and 100.');
+                return;
+            }
+
+            container.innerHTML = '';
+            container.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+            for (let i = 0; i < rows * columns; i++) {
+                const gridSquare = document.createElement('div');
+                gridSquare.classList.add('grid-square');
+                container.appendChild(gridSquare);
+            }
+            addHoverListeners();
+        }
+
+        function handleHover(e) {
+            if (currentColor === 'rainbow') {
+                const randomColor = getRandomColor();
+                e.target.style.backgroundColor = randomColor;
+            } else {
+                e.target.style.backgroundColor = currentColor;
+            }
+        }
+
+        function setColor(color) {
+            currentColor = color;
+        }
+
+        function clearGrid() {
+            const gridSquares = document.querySelectorAll('.grid-square');
+            gridSquares.forEach((square) => {
+                square.style.backgroundColor = 'white';
+            });
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function addHoverListeners() {
+            const gridSquares = document.querySelectorAll('.grid-square');
+            gridSquares.forEach((square) => {
+                square.addEventListener('mouseenter', handleHover);
+            });
+        }
+    </script>
+</body>
 </html>
