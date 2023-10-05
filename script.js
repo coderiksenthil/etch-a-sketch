@@ -13,7 +13,7 @@ function start(){
 }*/
 
 
-const container = document.getElementById('grid-container');
+/*const container = document.getElementById('grid-container');
         let currentColor = 'black';
 
         function createCustomGrid() {
@@ -69,4 +69,4 @@ const container = document.getElementById('grid-container');
             gridSquares.forEach((square) => {
                 square.addEventListener('mouseenter', handleHover);
             });
-        }
+        }*/
